@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
-    public float speed = 1f;
+    public float speed = 5.0f;
+    bool haChocado = true;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,18 @@ public class BallBehaviour : MonoBehaviour
     void Update()
     {
         speed += Time.deltaTime;
-        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        if (haChocado)
+        {
+            transform.Translate(Vector3.right * speed * Time.deltaTime);
+        }
+        else {
+        
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        haChocado = !haChocado;
+        Debug.Log("Me choqué");   
     }
 }
