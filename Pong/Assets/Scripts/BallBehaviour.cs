@@ -8,6 +8,11 @@ public class BallBehaviour : MonoBehaviour
     public float speed = 10.0f;
     Vector3 direction;
     float originalSpeed;
+    int scorePlayerOne;
+    int scorePlayerTwo;
+
+    public TextMeshProUGUI playerOneScore;
+    public TextMeshProUGUI playerTwoScore;
 
 
     // Start is called before the first frame update
@@ -30,6 +35,7 @@ public class BallBehaviour : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
+        AudioManager.instance.PlayPongSound();
         if (collision.gameObject.tag.Equals("Wall")) {
 
             direction = new Vector3(direction.x, direction.y * Random.Range(-1f, 0f), 0f);
@@ -43,8 +49,19 @@ public class BallBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        //scorePlayer += 1;
-        //playerScore.text = scorePlayer.ToString();
+        //AudioManager.instance.PlayGoalSound();
+
+        if (col.gameObject.tag.Equals("Score"))
+        {
+            scorePlayerTwo++;
+        }
+        else if (col.gameObject.tag.Equals("ScoreTwo"))
+        {
+            scorePlayerOne++;
+        }
+        playerOneScore.text = scorePlayerOne.ToString();
+        playerTwoScore.text = scorePlayerTwo.ToString();
+        
         ResetBall();
     }
 
